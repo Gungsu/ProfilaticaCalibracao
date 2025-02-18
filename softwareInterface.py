@@ -11,7 +11,7 @@ class App(customtkinter.CTk):
         
         self.readSerial = False
         self.switchManu = 82
-        self.leituraSerial = b""
+        self.leituraSerial = b"0"
         
         self.title("Profilatica Manutencao")
         self.geometry("820x600")
@@ -31,6 +31,10 @@ class App(customtkinter.CTk):
                                                  dark_image=Image.open(os.path.join(image_path, "chat_light.png")), size=(20, 20))
         self.add_user_image = customtkinter.CTkImage(light_image=Image.open(os.path.join(image_path, "add_user_dark.png")),
                                                      dark_image=Image.open(os.path.join(image_path, "add_user_light.png")), size=(20, 20))
+        
+        self.add_alert_image_Y = customtkinter.CTkImage(Image.open(os.path.join(image_path, "alertLed_Y.png")), size=(20, 20))
+        self.add_alert_image_G = customtkinter.CTkImage(Image.open(os.path.join(image_path, "alertLed_G.png")), size=(20, 20))
+        self.add_alert_image_R = customtkinter.CTkImage(Image.open(os.path.join(image_path, "alertLed_R.png")), size=(20, 20))
 
         # create navigation frame
         self.navigation_frame = customtkinter.CTkFrame(self, corner_radius=0)
@@ -89,7 +93,7 @@ class App(customtkinter.CTk):
         self.cali_frame_button_2 = customtkinter.CTkButton(self.third_frame, text="Modo Manut.", image=self.image_icon_image, compound="right", command=lambda: self.enviaComando("FW:","55"))
         self.cali_frame_button_2.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
         
-        self.frame3_label_Litro = customtkinter.CTkLabel(self.third_frame, text="Litro 1:",
+        self.frame3_label_Litro = customtkinter.CTkLabel(self.third_frame, text="Litro 1:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label_Litro.grid(row=1, column=0, padx=10, pady=20, sticky="ew")
         
@@ -97,7 +101,7 @@ class App(customtkinter.CTk):
         self.frame3_litro1_entry.grid(row=1, column=1, padx=20, pady=20, sticky="ew")
         self.frame3_litro1_entry.bind("<Return>",lambda event: self.enviaComando("L1:",self.frame3_litro1_entry.get()))
         
-        self.frame3_label2_Litro = customtkinter.CTkLabel(self.third_frame, text="Litro 2:",
+        self.frame3_label2_Litro = customtkinter.CTkLabel(self.third_frame, text="Litro 2:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label2_Litro.grid(row=2, column=0, padx=10, pady=20, sticky="ew")
         
@@ -105,7 +109,7 @@ class App(customtkinter.CTk):
         self.frame3_litro2_entry.grid(row=2, column=1, padx=20, pady=20, sticky="ew")
         self.frame3_litro2_entry.bind("<Return>",lambda event: self.enviaComando("L2:",self.frame3_litro2_entry.get()))
         
-        self.frame3_label3_Litro = customtkinter.CTkLabel(self.third_frame, text="Litro 3:",
+        self.frame3_label3_Litro = customtkinter.CTkLabel(self.third_frame, text="Litro 3:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label3_Litro.grid(row=3, column=0, padx=10, pady=20, sticky="ew")
         
@@ -113,7 +117,7 @@ class App(customtkinter.CTk):
         self.frame3_litro3_entry.grid(row=3, column=1, padx=20, pady=20, sticky="ew")
         self.frame3_litro3_entry.bind("<Return>",lambda event: self.enviaComando("L3:",self.frame3_litro3_entry.get()))
         
-        self.frame3_label_Dosagem1 = customtkinter.CTkLabel(self.third_frame, text="Dosagem 1:",
+        self.frame3_label_Dosagem1 = customtkinter.CTkLabel(self.third_frame, text="Dosagem 1:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label_Dosagem1.grid(row=4, column=0, padx=10, pady=20, sticky="ew")
         
@@ -121,35 +125,35 @@ class App(customtkinter.CTk):
         self.frame3_dosa1_entry.grid(row=4, column=1, padx=20, pady=20, sticky="ew")
         self.frame3_dosa1_entry.bind("<Return>",lambda event: self.enviaComando("P1:",self.frame3_dosa1_entry.get()))
         
-        self.frame3_label_Dosagem2 = customtkinter.CTkLabel(self.third_frame, text="Dosagem 2:",
+        self.frame3_label_Dosagem2 = customtkinter.CTkLabel(self.third_frame, text="Dosagem 2:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label_Dosagem2.grid(row=5, column=0, padx=10, pady=20, sticky="ew")
         self.frame3_dosa2_entry = customtkinter.CTkEntry(self.third_frame,placeholder_text="Dosagem 2[ml]")
         self.frame3_dosa2_entry.grid(row=5, column=1, padx=20, pady=20, sticky="ew")
         self.frame3_dosa2_entry.bind("<Return>",lambda event: self.enviaComando("P2:",self.frame3_dosa2_entry.get()))
         
-        self.frame3_label_Dosagem3 = customtkinter.CTkLabel(self.third_frame, text="Dosagem 3:",
+        self.frame3_label_Dosagem3 = customtkinter.CTkLabel(self.third_frame, text="Dosagem 3:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label_Dosagem3.grid(row=6, column=0, padx=10, pady=20, sticky="ew")
         self.frame3_dosa3_entry = customtkinter.CTkEntry(self.third_frame,placeholder_text="Dosagem 3[ml]")
         self.frame3_dosa3_entry.grid(row=6, column=1, padx=20, pady=20, sticky="ew")
         self.frame3_dosa3_entry.bind("<Return>",lambda event: self.enviaComando("P3:",self.frame3_dosa3_entry.get()))
         
-        self.frame3_label_Cali1 = customtkinter.CTkLabel(self.third_frame, text="Calibração 1:",
+        self.frame3_label_Cali1 = customtkinter.CTkLabel(self.third_frame, text="Calibração 1:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label_Cali1.grid(row=1, column=2, padx=10, pady=20, sticky="ew")
         self.frame3_cali1_entry = customtkinter.CTkEntry(self.third_frame,placeholder_text="Calibração 1")
         self.frame3_cali1_entry.grid(row=1, column=3, padx=20, pady=20, sticky="ew")
         self.frame3_cali1_entry.bind("<Return>",lambda event: self.enviaComando("C1:",self.frame3_cali1_entry.get()))
         
-        self.frame3_label_Cali2 = customtkinter.CTkLabel(self.third_frame, text="Calibração 2:",
+        self.frame3_label_Cali2 = customtkinter.CTkLabel(self.third_frame, text="Calibração 2:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label_Cali2.grid(row=2, column=2, padx=10, pady=20, sticky="ew")
         self.frame3_cali2_entry = customtkinter.CTkEntry(self.third_frame,placeholder_text="Calibração 2")
         self.frame3_cali2_entry.grid(row=2, column=3, padx=20, pady=20, sticky="ew")
         self.frame3_cali2_entry.bind("<Return>",lambda event: self.enviaComando("C2:",self.frame3_cali2_entry.get()))
         
-        self.frame3_label_Cali3 = customtkinter.CTkLabel(self.third_frame, text="Calibração 3:",
+        self.frame3_label_Cali3 = customtkinter.CTkLabel(self.third_frame, text="Calibração 3:",image=self.add_alert_image_R,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.frame3_label_Cali3.grid(row=3, column=2, padx=10, pady=20, sticky="ew")
         self.frame3_cali3_entry = customtkinter.CTkEntry(self.third_frame,placeholder_text="Calibração 3")
@@ -247,11 +251,6 @@ class App(customtkinter.CTk):
         else:
             print("Necessário conexão")
 
-def umPrim(q):
-    print("Iniciei")
-
 if __name__ == "__main__":
-    #threadMain = threading.Thread(target=umPrim,args=("value",))
-    #threadMain.start()
     app = App()
     app.mainloop()
