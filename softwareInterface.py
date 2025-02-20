@@ -7,7 +7,7 @@ import threading
 
 class App(customtkinter.CTk):
     def __init__(self):
-        super().__init__()
+        super().__init__()        
         
         self.readSerial = False
         self.switchManu = 83
@@ -202,6 +202,13 @@ class App(customtkinter.CTk):
 
         # select default frame
         self.select_frame_by_name("home")
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+    
+    def on_closing(self):
+        if self.readSerial:
+            self.switchManu = 83
+            self.enviaComando("FW:","55")
+        self.destroy()
     
     def select_frame_by_name(self, name):
         # set button color for selected button
@@ -342,18 +349,26 @@ class App(customtkinter.CTk):
             self.frame3_dosa3_entry.insert(0,str(int(strValor)))
             self.frame3_label_Dosagem3.configure(image=self.add_alert_image_G)
         elif campo == b"NP:":
+            texto = ""
+            for x in valor:
+                if x>=48 and x<=122:
+                    texto += chr(x)
             self.frame2_produto_entry.delete(0,16)
-            self.frame2_produto_entry.insert(0,valor.decode('utf-8'))
+            self.frame2_produto_entry.insert(0,texto)
             self.frame2_label_produto.configure(image=self.add_alert_image_G)
         elif campo == b"NS:":
             self.frame2_ns_entry.delete(0,16)
-            self.frame2_ns_entry.insert(0,valor.decode('utf-8'))
+            texto = ""
+            for x in valor:
+                if x>=48 and x<=122:
+                    texto += chr(x)
+            self.frame2_ns_entry.insert(0,texto)
             self.frame2_label_ns.configure(image=self.add_alert_image_G)
         elif campo == b"OK":
-            threadingAlerta = threading.Thread(target=self.limparAlerta,args=("COMANDO RECEBIDO",))
+            threadingAlerta = threading.Thread(target=self.limparAlerta,args=("Comando recebido...",))
             threadingAlerta.start()
         elif campo == b"NOK":
-            threadingAlerta = threading.Thread(target=self.limparAlerta,args=("COMANDO NEGADO",))
+            threadingAlerta = threading.Thread(target=self.limparAlerta,args=("Comando negado...",))
             threadingAlerta.start()
         else:
             strAlerta = "ERRO: " + campo
@@ -409,7 +424,7 @@ class App(customtkinter.CTk):
             cmdByte = comando.encode('utf-8')
             stringUnica = cmdByte+vlrByte
             stringUnica += b'\n'
-            self.ser.write(stringUnica)                
+            self.ser.write(stringUnica)
         else:
             threadingAlerta = threading.Thread(target=self.limparAlerta,args=("Necessario conexao!",))
             threadingAlerta.start()
